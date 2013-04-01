@@ -37,12 +37,12 @@
 
 namespace zbar {
 
-class SymbolIterator;
+class YBAR_API SymbolIterator;
 
 /// container for decoded result symbols associated with an image
 /// or a composite symbol.
 
-class SymbolSet {
+class YBAR_API SymbolSet {
 public:
     /// constructor.
     SymbolSet (const zbar_symbol_set_t *syms = NULL)
@@ -95,11 +95,11 @@ private:
 /// decoded barcode symbol result object.  stores type, data, and
 /// image location of decoded symbol
 
-class Symbol {
+class YBAR_API Symbol {
 public:
 
     /// image pixel location (x, y) coordinate tuple.
-    class Point {
+    class YBAR_API Point {
     public:
         int x;  ///< x-coordinate.
         int y;  ///< y-coordinate.
@@ -119,7 +119,7 @@ public:
     };
 
     /// iteration over Point objects in a symbol location polygon.
-    class PointIterator
+    class YBAR_API PointIterator
         : public std::iterator<std::input_iterator_tag, Point> {
 
     public:
@@ -347,7 +347,7 @@ private:
 };
 
 /// iteration over Symbol result objects in a scanned Image or SymbolSet.
-class SymbolIterator
+class YBAR_API SymbolIterator
     : public std::iterator<std::input_iterator_tag, Symbol> {
 
 public:

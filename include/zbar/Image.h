@@ -37,18 +37,18 @@
 
 namespace zbar {
 
-class Video;
+class YBAR_API Video;
 
 /// stores image data samples along with associated format and size
 /// metadata
 
-class Image {
+class YBAR_API Image {
 public:
 
     /// general Image result handler.
     /// applications should subtype this and pass an instance to
     /// eg. ImageScanner::set_handler() to implement result processing
-    class Handler {
+    class YBAR_API Handler {
     public:
         virtual ~Handler() { }
 
@@ -72,7 +72,7 @@ public:
         }
     };
 
-    class SymbolIterator : public zbar::SymbolIterator {
+    class YBAR_API SymbolIterator : public zbar::SymbolIterator {
     public:
         /// default constructor.
         SymbolIterator ()

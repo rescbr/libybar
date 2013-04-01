@@ -37,7 +37,7 @@ namespace zbar {
 /// mid-level image scanner interface.
 /// reads barcodes from a 2-D Image
 
-class ImageScanner {
+class YBAR_API ImageScanner {
 public:
     /// constructor.
     ImageScanner (zbar_image_scanner_t *scanner = NULL)

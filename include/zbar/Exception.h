@@ -35,8 +35,8 @@
 
 namespace zbar {
 
-	/// base class for exceptions defined by this API.
-	class Exception : public std::exception {
+	/// base class YBAR_API for exceptions defined by this API.
+	class YBAR_API Exception : public std::exception {
 
 	public:
 		/// create exception from C library error
@@ -60,7 +60,7 @@ namespace zbar {
 	};
 
 	/// internal library error.
-	class InternalError : public Exception {
+	class YBAR_API InternalError : public Exception {
 	public:
 		/// create exception from C library error
 		InternalError (const void *obj)
@@ -69,7 +69,7 @@ namespace zbar {
 	};
 
 	/// unsupported request.
-	class UnsupportedError : public Exception {
+	class YBAR_API UnsupportedError : public Exception {
 	public:
 		/// create exception from C library error
 		UnsupportedError (const void *obj)
@@ -78,7 +78,7 @@ namespace zbar {
 	};
 
 	/// invalid request.
-	class InvalidError : public Exception {
+	class YBAR_API InvalidError : public Exception {
 	public:
 		/// create exception from C library error
 		InvalidError (const void *obj)
@@ -87,7 +87,7 @@ namespace zbar {
 	};
 
 	/// failed system call.
-	class SystemError : public Exception {
+	class YBAR_API SystemError : public Exception {
 	public:
 		/// create exception from C library error
 		SystemError (const void *obj)
@@ -96,7 +96,7 @@ namespace zbar {
 	};
 
 	/// locking error.
-	class LockingError : public Exception {
+	class YBAR_API LockingError : public Exception {
 	public:
 		/// create exception from C library error
 		LockingError (const void *obj)
@@ -105,7 +105,7 @@ namespace zbar {
 	};
 
 	/// all resources busy.
-	class BusyError : public Exception {
+	class YBAR_API BusyError : public Exception {
 	public:
 		/// create exception from C library error
 		BusyError (const void *obj)
@@ -114,7 +114,7 @@ namespace zbar {
 	};
 
 	/// X11 display error.
-	class XDisplayError : public Exception {
+	class YBAR_API XDisplayError : public Exception {
 	public:
 		/// create exception from C library error
 		XDisplayError (const void *obj)
@@ -123,7 +123,7 @@ namespace zbar {
 	};
 
 	/// X11 protocol error.
-	class XProtoError : public Exception {
+	class YBAR_API XProtoError : public Exception {
 	public:
 		/// create exception from C library error
 		XProtoError (const void *obj)
@@ -132,7 +132,7 @@ namespace zbar {
 	};
 
 	/// output window is closed.
-	class ClosedError : public Exception {
+	class YBAR_API ClosedError : public Exception {
 	public:
 		/// create exception from C library error
 		ClosedError (const void *obj)
@@ -141,7 +141,7 @@ namespace zbar {
 	};
 
 	/// image format error
-	class FormatError : public Exception {
+	class YBAR_API FormatError : public Exception {
 		// FIXME needs c equivalent
 
 		virtual const char* what () const throw()

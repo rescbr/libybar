@@ -37,7 +37,7 @@ namespace zbar {
 /// low-level bar width stream decoder interface.
 /// identifies symbols and extracts encoded data
 
-class __declspec(dllexport) Decoder {
+class YBAR_API Decoder {
  public:
 
     /// Decoder result handler.

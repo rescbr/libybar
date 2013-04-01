@@ -38,7 +38,7 @@ namespace zbar {
 /// identifies "bar" edges and measures width between them.
 /// optionally passes to bar width Decoder
 
-class Scanner {
+class YBAR_API Scanner {
  public:
 
     /// constructor.
