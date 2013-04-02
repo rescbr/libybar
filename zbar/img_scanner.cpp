@@ -617,6 +617,7 @@ namespace zbar {
 #endif
 
 		/* get grayscale image, convert if necessary */
+		// rescbr: WHERE'S THE CONVERT CODE!?
 		if(img->format != fourcc('Y','8','0','0') &&
 			img->format != fourcc('G','R','E','Y'))
 			return(-1);

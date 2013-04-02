@@ -92,8 +92,18 @@ void zbar_scanner_destroy (zbar_scanner_t *scn)
 }
 
 zbar_symbol_type_t zbar_scanner_reset (zbar_scanner_t *scn)
-{                      
-	memset(&scn->x, 0, sizeof(zbar_scanner_t) + (size_t)((ptrdiff_t*)scn - (ptrdiff_t*)&scn->x));
+{      
+	//REALLY!?
+	//memset(&scn->x, 0, sizeof(zbar_scanner_t) + (size_t)((ptrdiff_t*)scn - (ptrdiff_t*)&scn->x));
+	//
+
+	zbar_decoder_t *tmp_dec = scn->decoder;
+	unsigned int tmp_y1_min_thresh = scn->y1_min_thresh;
+
+	memset(scn, 0, sizeof(zbar_scanner_t));
+	scn->decoder = tmp_dec;
+	scn->y1_min_thresh = tmp_y1_min_thresh;
+
     scn->y1_thresh = scn->y1_min_thresh;
     if(scn->decoder)
         zbar_decoder_reset(scn->decoder);
@@ -205,7 +215,13 @@ zbar_symbol_type_t zbar_scanner_new_scan (zbar_scanner_t *scn)
     }
 
     /* reset scanner and associated decoder */
-	memset(&scn->x, 0, sizeof(zbar_scanner_t) + (size_t)((ptrdiff_t*)scn - (ptrdiff_t*)&scn->x));
+	zbar_decoder_t *tmp_dec = scn->decoder;
+	unsigned int tmp_y1_min_thresh = scn->y1_min_thresh;
+
+	memset(scn, 0, sizeof(zbar_scanner_t));
+	scn->decoder = tmp_dec;
+	scn->y1_min_thresh = tmp_y1_min_thresh;
+
     scn->y1_thresh = scn->y1_min_thresh;
     if(scn->decoder)
         zbar_decoder_new_scan(scn->decoder);
