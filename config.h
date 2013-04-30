@@ -189,8 +189,14 @@
    #define below would cause a syntax error. */
 #undef _UINT8_T
 
+
 /* Minimum Windows API version */
-#define _WIN32_WINNT 0x0601
+#include <winapifamily.h>
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+# define _WIN32_WINNT 0x0602
+#else
+# define _WIN32_WINNT 0x0601
+#endif
 
 /* used only for pthread debug attributes */
 #undef __USE_UNIX98
@@ -224,9 +230,10 @@
 # define HAVE_X
 #endif
 
+
+
 #ifdef _MSC_VER
 #include "__msvc_snprintf.h"
 #include "__msvc_gettimeofday.h"
 #endif
-
 #endif

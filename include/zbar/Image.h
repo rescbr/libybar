@@ -97,8 +97,9 @@ public:
            const std::string& format = "",
            const void *data = NULL,
            unsigned long length = 0)
-        : _img(zbar_image_create())
+        //: _img(zbar_image_create())
     {
+		_img = zbar_image_create();
         zbar_image_set_userdata(_img, this);
         if(width && height)
             set_size(width, height);

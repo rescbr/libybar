@@ -24,14 +24,10 @@
 #ifndef _ZBAR_H_
 #define _ZBAR_H_
 
-#ifdef YBAR_DLL
-# ifdef YBAR_EXPORTS
+#ifdef YBAR_EXPORTS
 #  define YBAR_API __declspec(dllexport)
 # else
 #  define YBAR_API __declspec(dllimport)
-#endif
-#else
-# define YBAR_API
 #endif
 
 

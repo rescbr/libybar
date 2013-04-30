@@ -205,7 +205,7 @@ namespace zbar {
 	{
 		int len = strlen(filebase) + 16;
 		char *filename = (char*)malloc((size_t)len);
-		strcpy(filename, filebase);
+		strcpy_s(filename, len, filebase);
 		int n = 0;
 		if(*(char*)&img->format >= ' ')
 			n = snprintf(filename, len, "%s.%.4s.zimg",
@@ -219,10 +219,12 @@ namespace zbar {
 		zprintf(1, "dumping %.4s(%08" PRIx32 ") image to %s\n",
 			(char*)&img->format, img->format, filename);
 
-		FILE *f = fopen(filename, "w");
-		if(!f) {
+		FILE *f;
+		errno_t ferr = fopen_s(&f, filename, "w");
+		if(ferr) {
 			int rc = errno;
-			zprintf(1, "ERROR opening %s: %s\n", filename, strerror(rc));
+			//zprintf(1, "ERROR opening %s: %s\n", filename, strerror(rc));
+			zprintf(1, "ERROR opening %s.\n", filename);
 			free(filename);
 			return(rc);
 		}
@@ -237,7 +239,8 @@ namespace zbar {
 		if(fwrite(&hdr, sizeof(hdr), 1, f) != 1 ||
 			fwrite(img->data, 1, img->datalen, f) != img->datalen) {
 				int rc = errno;
-				zprintf(1, "ERROR writing %s: %s\n", filename, strerror(rc));
+				//zprintf(1, "ERROR writing %s: %s\n", filename, strerror(rc));
+				zprintf(1, "ERROR writing %s.\n", filename);
 				fclose(f);
 				free(filename);
 				return(rc);

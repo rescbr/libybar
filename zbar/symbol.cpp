@@ -189,7 +189,8 @@ char *zbar_symbol_xml (const zbar_symbol_t *sym,
 
     /* FIXME binary data */
     /* FIXME handle "]]>" */
-    strncpy(*buf + n, sym->data, datalen + 1);
+	strncpy_s(*buf + n, maxlen - n, sym->data, datalen + 1);
+
     n += datalen;
     assert(n <= maxlen);
 

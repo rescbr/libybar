@@ -128,7 +128,7 @@ namespace zbar {
 		char basefmt[] = "%s: zbar %s in %s():\n    %s: ";
 		int len = SEV_MAX + MOD_MAX + ERR_MAX + strlen(func) + sizeof(basefmt);
 		err->buf = (char*)realloc(err->buf, len);
-		len = sprintf(err->buf, basefmt, sev, mod, func, type);
+		len = sprintf_s(err->buf, len, basefmt, sev, mod, func, type);
 		if(len <= 0)
 			return("<unknown>");
 
@@ -136,17 +136,17 @@ namespace zbar {
 			int newlen = len + strlen(err->detail) + 1;
 			if(strstr(err->detail, "%s")) {
 				if(!err->arg_str)
-					err->arg_str = strdup("<?>");
+					err->arg_str = _strdup("<?>");
 				err->buf = (char*)realloc(err->buf, newlen + strlen(err->arg_str));
-				len += sprintf(err->buf + len, err->detail, err->arg_str);
+				len += sprintf_s(err->buf + len, newlen + strlen(err->arg_str), err->detail, err->arg_str);
 			}
 			else if(strstr(err->detail, "%d") || strstr(err->detail, "%x")) {
 				err->buf = (char*)realloc(err->buf, newlen + 32);
-				len += sprintf(err->buf + len, err->detail, err->arg_int);
+				len += sprintf_s(err->buf + len, newlen + 32, err->detail, err->arg_int);
 			}
 			else {
 				err->buf = (char*)realloc(err->buf, newlen);
-				len += sprintf(err->buf + len, "%s", err->detail);
+				len += sprintf_s(err->buf + len, newlen, "%s", err->detail);
 			}
 			if(len <= 0)
 				return("<unknown>");
@@ -154,28 +154,32 @@ namespace zbar {
 
 		if(err->type == ZBAR_ERR_SYSTEM) {
 			char sysfmt[] = ": %s (%d)\n";
-			const char *syserr = strerror(err->errnum);
-			err->buf = (char*)realloc(err->buf, len + strlen(sysfmt) + strlen(syserr));
-			len += sprintf(err->buf + len, sysfmt, syserr, err->errnum);
+			//const char *syserr = strerror(err->errnum);
+			const char *syserr = "ZBAR_ERR_SYSTEM";
+			size_t slen = len + strlen(sysfmt) + strlen(syserr);
+			err->buf = (char*)realloc(err->buf, slen);
+			len += sprintf_s(err->buf + len, slen, sysfmt, syserr, err->errnum);
 		}
 #ifdef _WIN32
 		else if(err->type == ZBAR_ERR_WINAPI) {
-			char *syserr = NULL;
-			if(FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM |
-				FORMAT_MESSAGE_ALLOCATE_BUFFER |
-				FORMAT_MESSAGE_IGNORE_INSERTS,
-				NULL, err->errnum, 0, (LPTSTR)&syserr, 1, NULL) &&
-				syserr) {
+			//char *syserr = NULL;
+			char *syserr = "ZBAR_ERR_WINAPI";
+			//if(FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM |
+			//	FORMAT_MESSAGE_ALLOCATE_BUFFER |
+			//	FORMAT_MESSAGE_IGNORE_INSERTS,
+			//	NULL, err->errnum, 0, (LPTSTR)&syserr, 1, NULL) &&
+			//	syserr) {
 					char sysfmt[] = ": %s (%d)\n";
-					err->buf = (char*)realloc(err->buf, len + strlen(sysfmt) + strlen(syserr));
-					len += sprintf(err->buf + len, sysfmt, syserr, err->errnum);
-					LocalFree(syserr);
-			}
+					size_t slen = len + strlen(sysfmt) + strlen(syserr);
+					err->buf = (char*)realloc(err->buf, slen);
+					len += sprintf_s(err->buf + len, slen, sysfmt, syserr, err->errnum);
+			//		LocalFree(syserr);
+			//}
 		}
 #endif
 		else {
 			err->buf = (char*)realloc(err->buf, len + 2);
-			len += sprintf(err->buf + len, "\n");
+			len += sprintf_s(err->buf + len, len+2, "\n");
 		}
 		return(err->buf);
 	}
